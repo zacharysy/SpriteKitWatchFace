@@ -84,23 +84,23 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 		
 		self.faceSize = (CGSize){184, 224};
 
-		self.theme = [[NSUserDefaults standardUserDefaults] integerForKey:@"Theme"];
+		self.theme = ThemeNotreDame3; //[[NSUserDefaults standardUserDefaults] integerForKey:@"Theme"];
 		self.useBackgroundImageOverlay = NO;
-		self.faceStyle = FaceStyleRound;
+		self.faceStyle = FaceStyleRectangular;
 		self.numeralStyle = NumeralStyleAll;
 		self.tickmarkStyle = TickmarkStyleAll;
 		self.majorTickmarkShape = TickmarkShapeRectangular;
-		self.minorTickmarkShape = TickmarkShapeRectangular;
+		self.minorTickmarkShape = TickmarkShapeCircular;
 		
-		self.majorTickHeight = 6;
-		self.majorTickWidth = 2;
+		self.majorTickHeight = 8;
+		self.majorTickWidth = 4;
 
 		self.colorRegionStyle = ColorRegionStyleDynamicDuo;
 		
 		self.dateStyle = DateStyleDayDate;
-		self.dateQuadrant = DateQuadrantRight;
+		self.dateQuadrant = DateQuadrantBottom;
 
-		self.monogram = @""; // e.g. 
+		self.monogram = @""; // e.g. 
 		
 		[self refreshTheme];
 		
@@ -438,7 +438,7 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 	/* Numerals */
 	for (int i = 1; i <= 12; i++)
 	{
-		CGFloat fontSize = 25;
+		CGFloat fontSize = 32;
 		
 		SKSpriteNode *labelNode = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(fontSize, fontSize)];
 		labelNode.anchorPoint = CGPointMake(0.5,0.5);
@@ -454,7 +454,7 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 		
 		[faceMarkings addChild:labelNode];
 		
-		NSDictionary *attribs = @{NSFontAttributeName : [NSFont fontWithName:@"Futura-Medium" size:fontSize], NSForegroundColorAttributeName : self.textColor};
+		NSDictionary *attribs = @{NSFontAttributeName : [NSFont fontWithName:@"Futura-Bold" size:fontSize], NSForegroundColorAttributeName : self.textColor};
 		
 		NSAttributedString *labelText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%i", i] attributes:attribs];
 		
@@ -534,12 +534,12 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 		}
 		else if (self.dateStyle == DateStyleDayDate)
 		{
-			[df setDateFormat:@"ccc d"];
+			[df setDateFormat:@"EEE MMM dd"];
 		}
 		
-		CGFloat dateFontSize = 12;
+		CGFloat dateFontSize = 14;
 		
-		NSDictionary *attribs = @{NSFontAttributeName : [[NSFont systemFontOfSize:dateFontSize weight:NSFontWeightMedium] smallCaps], NSForegroundColorAttributeName : self.textColor};
+		NSDictionary *attribs = @{NSFontAttributeName : [[NSFont fontWithName:@"Futura-Bold" size:dateFontSize] smallCaps], NSForegroundColorAttributeName : self.textColor};
 		
 		NSAttributedString *labelText = [[NSAttributedString alloc] initWithString:[[df stringFromDate:[NSDate date]] uppercaseString] attributes:attribs];
 
@@ -920,6 +920,40 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 			self.useMasking = YES;
 			break;
 		}
+		case ThemeNotreDame:
+		{
+			colorRegionColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			faceBackgroundColor = [SKColor colorWithRed:0.04 green:0.14 blue:0.25 alpha:1.0];
+			inlayColor = [SKColor whiteColor];
+			majorMarkColor = [SKColor whiteColor];
+			minorMarkColor = majorMarkColor;
+			handColor = [SKColor whiteColor];
+			textColor = [SKColor whiteColor];
+			secondHandColor = majorMarkColor;
+			break;
+		}case ThemeNotreDame2:
+		{
+			colorRegionColor = [SKColor blackColor];
+			faceBackgroundColor =  [SKColor blackColor];
+			inlayColor = [SKColor colorWithRed:0.04 green:0.14 blue:0.25 alpha:1.0];
+			majorMarkColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			minorMarkColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			handColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			textColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			secondHandColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			break;
+		}case ThemeNotreDame3:
+		{
+			colorRegionColor = [SKColor colorWithRed:0.04 green:0.14 blue:0.25 alpha:1.0];
+			faceBackgroundColor =  [SKColor blackColor];
+			inlayColor = [SKColor colorWithRed:0.04 green:0.14 blue:0.25 alpha:1.0];
+			majorMarkColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			minorMarkColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			handColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			textColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			secondHandColor = [SKColor colorWithRed:0.79 green:0.59 blue:0.17 alpha:1.0];
+			break;
+		}
 		default:
 			break;
 	}
@@ -1022,7 +1056,7 @@ CGFloat workingRadiusForFaceOfSizeWithAngle(CGSize faceSize, CGFloat angle)
 		colorRegion.texture = [SKTexture textureWithImageNamed:@"ColorRegionRing"];
 		colorRegion.anchorPoint = CGPointMake(0.5, 0.5);
 		colorRegion.position = CGPointZero;
-		colorRegion.size = CGSizeMake(179*colorRegionScale, 179*colorRegionScale);
+		colorRegion.size = CGSizeMake(290*colorRegionScale, 365*colorRegionScale);
 		
 		colorRegionReflection.texture = [SKTexture textureWithImageNamed:@"ColorRegionRingReflection"];
 		colorRegionReflection.anchorPoint = CGPointMake(0.5, 0.5);
